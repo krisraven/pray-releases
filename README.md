@@ -37,7 +37,6 @@ A premium version is available with 600 Bible quotes instead of 60.
 
 More details to come
 
-
 ## Uninstallation
 
 ### Unix/Linux/macOS
@@ -56,27 +55,7 @@ uninstall.bat --global          # Uninstall from Program Files (admin required)
 uninstall.bat -d C:\Tools       # Uninstall from custom directory
 ```
 
-## Cross-Platform Builds
-
-To build executables for multiple platforms (Windows, macOS, Linux) and architectures (x86, ARM, etc.), use the provided build script:
-
-```bash
-# Build for all platforms
-./build.sh all
-
-# Build for a specific platform
-./build.sh linux-amd64
-./build.sh macos-arm64
-./build.sh windows-amd64
-
-# Build for your current OS
-./build.sh current
-
-# Clean build artifacts
-./build.sh clean
-```
-
-**Supported targets:**
+## Supported platforms
 - `windows-amd64` - Windows 64-bit
 - `windows-386` - Windows 32-bit
 - `windows-arm64` - Windows ARM64
@@ -86,35 +65,6 @@ To build executables for multiple platforms (Windows, macOS, Linux) and architec
 - `linux-386` - Linux 32-bit
 - `linux-arm` - Linux ARM (32-bit)
 - `linux-arm64` - Linux ARM64
-
-Binaries are organized in the `build/` directory. The quotes are fetched dynamically from the CDN, so no bundled data files are needed.
-
-## Automated Releases
-
-This project uses **GitHub Actions** to automatically build and release executables for all platforms whenever a new version tag is pushed.
-
-### Creating a Release
-
-1. **Create a tag** with semantic versioning:
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-2. **GitHub Actions automatically:**
-   - Builds for all 9 platform/architecture combinations
-   - Creates platform-specific archives (`.zip` for Windows, `.tar.gz` for Unix)
-   - Publishes a GitHub Release with all binaries
-
-3. **Users can download** pre-built executables from the [Releases](https://github.com/krisraven/pray-releases/releases) page
-
-### Release Process
-
-- **Trigger:** Push a git tag starting with `v` (e.g., `v1.0.0`, `v1.1.0`)
-- **Build Time:** ~5-10 minutes total
-- **Outputs:** Pre-compiled binaries ready for distribution
-
-For detailed information, see [.github/workflows/README.md](.github/workflows/README.md).
 
 ## Usage
 
@@ -128,76 +78,6 @@ Each time you run it, you'll see a random Bible quote with its reference:
 ```
 For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.
 — John 3:16
-```
-
-## Adding More Quotes
-
-You can add more quotes to the `quotes.json` file. Each quote should follow this format:
-
-```json
-{
-  "text": "Quote text here",
-  "reference": "Book Chapter:Verse"
-}
-```
-
-**No rebuild needed!** The quotes are fetched from the CDN, so users automatically get the updated quotes when they run the tool. Just commit and push your changes to the repository:
-
-```bash
-git add quotes.json
-git commit -m "Add new quotes"
-git push origin main
-```
-
-The CLI will fetch the latest quotes from jsDelivr CDN on the next run.
-
-## Testing
-
-Run the test suite:
-```bash
-go test -v
-```
-
-Tests verify:
-- JSON parsing functionality
-- Quote data structure integrity
-- Proper unmarshaling of quote data
-
-## Distribution & Packaging
-
-For comprehensive information on distributing and selling the Pray CLI tool, see [DISTRIBUTION.md](DISTRIBUTION.md).
-
-**Key distribution features:**
-- Automated multi-platform builds via GitHub Actions
-- Universal installation scripts for Unix and Windows
-- Pre-built binaries for all platforms
-- Support for Gumroad, Itch.io, package managers, and more
-- Pricing models and licensing strategies
-
-## Project Structure
-
-```
-pray/
-├── main.go                          # Main program logic
-├── main_test.go                     # Unit tests
-├── quotes.json                      # Bible quotes database
-├── go.mod                           # Go module definition
-├── build.sh                         # Cross-platform build script
-├── Makefile                         # Alternative build automation
-├── quotes-premium.json              # Premium quotes database (not distributed publicly)
-├── install.sh                       # Universal Unix installer
-├── install.bat                      # Windows batch installer
-├── uninstall.sh                     # Universal Unix uninstaller
-├── uninstall.bat                    # Windows batch uninstaller
-├── .gitignore                       # Git ignore rules
-├── LICENSE                          # Commercial software license
-├── COMMERCIAL_LICENSE.md            # Licensing strategy guide
-├── DISTRIBUTION.md                  # Distribution & packaging guide
-├── README.md                        # This file
-└── .github/
-    └── workflows/
-        ├── build-release.yml        # GitHub Actions workflow
-        └── README.md                # Workflow documentation
 ```
 
 ## Quote Sources
@@ -215,7 +95,3 @@ This software is provided under a **Commercial Software License Agreement**.
 See the [LICENSE](LICENSE) file for complete terms and conditions.
 
 For commercial licensing inquiries, please contact the publisher.
-
-## Contributing
-
-Pull requests are welcome! Feel free to add more quotes or improve the tool.
